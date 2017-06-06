@@ -20,7 +20,8 @@ const numZip = document.getElementById('zip');
 const numCVV = document.getElementById('cvv');
 const divCreditCard = document.getElementById('divCreditCard');
 const mailString = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-const letters = /^[A-Za-z]+$/;
+const letters = /^[a-z ,.'-]+$/i;
+
 
 let validName = false;
 let validEmail = false;
@@ -351,7 +352,7 @@ function validateCCZip(target){
 function validateCCCVV(target){
   let parent = target.parentNode;
   let child = target;
-  if (target.value.length == 3) {
+  if (target.value.length === 3) {
     validCCCVV = true;
     removeText(target);
     return true;
@@ -414,9 +415,9 @@ function validateForm(){
   window.scrollTo(0,top);
 
   if (validName && validEmail && validActivities > 0 && validPayment) {
-    alert('Form was submitted successfully.');
     console.log(validName, validEmail, validActivities, validPayment);
   }else {
+    event.preventDefault();
     console.log(validName, validEmail, validActivities, validPayment);
     let parent = form;
     let li = createValidationText('Please correct the invalid field below');
@@ -478,7 +479,7 @@ numCVV.addEventListener('focusout',(e)=>{
 });
 
 btnSubmit.addEventListener('click',()=>{
-  event.preventDefault();
+  //event.preventDefault();
   validateForm();
 });
 
